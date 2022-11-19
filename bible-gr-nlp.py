@@ -20,6 +20,7 @@ import seaborn as sbn
 import matplotlib.pyplot as plt
 from scipy.stats import hmean
 from scipy.stats import norm
+from greek_accentuation.characters import *
 
 import unidecode
 
@@ -41,15 +42,13 @@ for ifile in ifiles:
     data.append(book)
 
 stop_words = stopwords.words('greek')
-stop_words = list(map(unidecode.unidecode, stop_words))
+#stop_words = list(map(unidecode.unidecode, stop_words))
+stop_words = list(map(strip_accents, stop_words))
 stop_words = list(map(lambda s:s.translate(str.maketrans('', '', string.punctuation)), stop_words))
-
-stop_words = stopwords.words('greek')
-stop_words = list(map(unidecode.unidecode, stop_words))
 stop_words = list(map(lambda s:s.translate(str.maketrans('', '', string.punctuation)), stop_words))
-stop_words.extend([
-"autou", "autois", "touto", "auten", "touton", "tauta", "tou","mou", "moi","umou", "emas", "umon", "emoi", 
-"emou", "sou", "soi", "pas", "panta", "pantas", "pante", "pantes", "pasai", "pollous", "en", "umeis"])
+#stop_words.extend([
+#"autou", "autois", "touto", "auten", "touton", "tauta", "tou","mou", "moi","umou", "emas", "umon", "emoi", 
+#"emou", "sou", "soi", "pas", "panta", "pantas", "pante", "pantes", "pasai", "pollous", "en", "umeis"])
 stop_words = list(dict.fromkeys(stop_words))
 
 for i, book in enumerate(data, 0):
@@ -64,7 +63,8 @@ for i, book in enumerate(data, 0):
     #lower case 
     data[i] = data[i].lower() 
     ## remove accents
-    data[i] = unidecode.unidecode(data[i])
+    #data[i] = unidecode.unidecode(data[i])
+    data[i] = strip_accents(data[i])
     # remove punctuation 
     data[i] = data[i].translate(str.maketrans('', '', string.punctuation))
     # remove stopwords 
@@ -238,11 +238,11 @@ num_topics = [2, 3,  4, 5]
 chunksizes = [20, 50, 100]
 
 
-if __name__ == '__main__':
-    for num_topic in num_topics:
-        for chunksize in chunksizes:
-            print(f"!!!!!! Num Topic {num_topic} and chunksize {chunksize}")
-            lda_model, df_lda, corpus = run_lda(data, num_topic, chunksize)
+# if __name__ == '__main__':
+#     for num_topic in num_topics:
+#         for chunksize in chunksizes:
+#             print(f"!!!!!! Num Topic {num_topic} and chunksize {chunksize}")
+#             lda_model, df_lda, corpus = run_lda(data, num_topic, chunksize)
 
 
 from sklearn.manifold import TSNE

@@ -18,7 +18,7 @@ FILE_PATH = "data/spurgeon_full.txt"
 
 sequence_length = 100
 BATCH_SIZE = 128
-EPOCHS = 10
+EPOCHS = 30
 # dataset file path
 
 BASENAME = os.path.basename(FILE_PATH)

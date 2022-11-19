@@ -51,11 +51,10 @@ for i in tqdm.tqdm(range(n_chars), "Generating text"):
     # shift seed and the predicted character
     seed = seed[1:] + next_char
 
-print("Seed:", s)
-#print("Generated text:")
-#print(generated)
-
 GEN_PATH = "results/generated.txt"
+print("Seed:", s)
+print("Generated text saved in ", GEN_PATH)
+print(generated)
 file = open(GEN_PATH, "w", encoding="utf-8")
 file.write(generated)
 file.close()

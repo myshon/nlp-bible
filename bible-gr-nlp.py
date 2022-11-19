@@ -3,6 +3,7 @@ import re
 from unicodedata import name
 import nltk
 from nltk.corpus import stopwords
+nltk.download('stopwords')
 import glob
 import string
 import gensim
@@ -72,15 +73,19 @@ for i, book in enumerate(data, 0):
     data[i] = without_stopwords
 
 all_books = ''
+i = 1
 for pbook in data:
+    if i > 4: # only gospels first 4 books
+        break
     all_books += pbook + " "
+    i += 1
     
 # WORDCLOUD
-# wordcloud = WordCloud(width=1600, height=800,max_font_size=200).generate(all_books)
-# plt.figure(figsize=(12,10))
-# plt.imshow(wordcloud, interpolation="bilinear")
-# plt.axis("off")
-# plt.show()
+wordcloud = WordCloud(width=1600, height=800,max_font_size=200).generate(all_books)
+plt.figure(figsize=(12,10))
+plt.imshow(wordcloud, interpolation="bilinear")
+plt.axis("off")
+plt.show()
 
 
 # Zipf’s law plot
@@ -506,13 +511,13 @@ def show_cluster_locations(results, labels, x_coords, y_coords):
         plt.close()
 
 
-if __name__ == '__main__':
-    x_coords, y_coords, labels, arr = calculate_t_sne(word2vec)
-    # and let's save the t-sne plots with the words clusters 
-    frequencies = get_word_frequencies(df['text'].tolist())
-    # check the first 50 most frequent words and see if they're in the w2v
-    for item in frequencies[:50]:
-        test_words.append(item[0])
-    results = test_word2vec(test_words)
-    # and once we have all the word + neighbors let's see how the t-sne has grouped them 
-    show_cluster_locations(results, labels, x_coords, y_coords)
+# if __name__ == '__main__':
+#     x_coords, y_coords, labels, arr = calculate_t_sne(word2vec)
+#     # and let's save the t-sne plots with the words clusters 
+#     frequencies = get_word_frequencies(df['text'].tolist())
+#     # check the first 50 most frequent words and see if they're in the w2v
+#     for item in frequencies[:50]:
+#         test_words.append(item[0])
+#     results = test_word2vec(test_words)
+#     # and once we have all the word + neighbors let's see how the t-sne has grouped them 
+#     show_cluster_locations(results, labels, x_coords, y_coords)
